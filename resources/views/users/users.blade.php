@@ -6,11 +6,11 @@
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
-				<div class="panel-heading">
-					<i class="fa fa-ticket">Users</i>
+				<div class="flex justify-start ml-5 text-xl text-green-400">
+					<span class="font-bold">Users</span>
 				</div>
 
-				<div class="panel-body">
+				<div class="">
 					@if ($users->isEmpty())
 						<p>There are currently no users.</p>
 					@else
@@ -18,23 +18,23 @@
 							@include('includes.flash')
 							<thead>
 								<tr>
-									<th>Name</th>
-									<th>Email</th>
-									<th style="text-align:center" colspan="2">Actions</th>
+									<th class="bg-gray-300 text-center">Name</th>
+									<th class="bg-gray-300 text-center">Email</th>
+									<th class="bg-gray-300 text-center" colspan="2">Actions</th>
 								</tr>
 							</thead>
 							<tbody>
                                 @foreach ($users as $user)
                                 @if ($user->is_admin == 0)
                                 <tr>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
+                                    <td class="bg-white  text-lg text-center">{{ $user->name }}</td>
+                                    <td class="bg-white text-lg text-center">{{ $user->email }}</td>
                         
-                                    <td style="text-align:center">
+                                    <td class="bg-white text-center">
                                         <form action="{{ url('/admin/users', ['id'=> $user->id]) }}" method="POST">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
-                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                            <button type="submit" class="text-red-600 font-bold text-lg">Delete</button>
                                         </form>
                                     </td>
                                 </tr>

@@ -90,7 +90,7 @@ class TicketsController extends Controller
 
 	public function close($ticket_id) {
 		$ticket = Ticket::where('ticket_id', $ticket_id)->firstOrFail(); 
-		$ticket->is_resolved = 'losed';
+		$ticket->is_resolved = 'closed';
     
 		$ticket->save();
 		// $ticketOwner = $ticket->user;

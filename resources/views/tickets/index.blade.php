@@ -5,61 +5,64 @@
 @section('content')
     <div class="overflow-x-auto">
         <div class="w-full lg:w-5/6">
-            <div class="bg-white shadow-md rounded my-6">
+            <div class="bg-white shadow-md rounded my-6 m-5">
                 @if ($tickets->isEmpty())
                     <p>You have not created any tickets.</p>
                 @else
                     <table class="min-w-max w-full table-auto">
-                        <thead>
+                        <thead class="m-20">
                             <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                                 <th class="py-3 px-6 text-left">Categorie</th>
                                 <th class="py-3 px-6 text-left">Title</th>
                                 <th class="py-3 px-6 text-center">Status</th>
                                 <th class="py-3 px-6 text-center">Latest Updates</th>
-                                <th class="py-3 px-6 text-center">Actions</th>
+                                <th class="py-3 px-6 text-center">Comments</th>
+                                <th class="py-3 px-6">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="text-gray-600 text-sm font-light">
+                        <tbody class="text-black text-lg font-regular">
 							@foreach ($tickets as $ticket)
                                 <tr>
-                                    <td class="py-3 px-6 text-left whitespace-nowrap">
+                                    <td class="py-3 px-3">
 										@foreach ($categories as $category)
 										@if ($category->id === $ticket->category_id)
 											{{ $category->name }}
 										@endif
 									@endforeach
                                     </td>
-                                    <td>
-                                        <a href="{{ url('tickets/'. $ticket->ticket_id) }}">
+                                    <td class="py-3 px-3">
+                                        <a class="text-red-600" href="{{ url('tickets/'. $ticket->ticket_id) }}">
 											#{{ $ticket->ticket_id }} - {{ $ticket->title }}
 										</a>
                                     </td>
-									<div class="flex justify-between">
-                                    <td class="pr-10">
+									
+                                    <td class="py-3 px-6 text-center">
                                         @if ($ticket->status === 'Open')
                                             <span
-                                                class="bg-green-400 hover:bg-blue-dark pb-16 text-white font-bold py-2 px-4 rounded">{{ $ticket->is_resolved }}</span>
+                                                class="bg-green-400 hover:bg-green-600 pb-16 text-white font-bold rounded">{{ $ticket->is_resolved }}</span>
                                         @else
-                                            <span class="bg-red-400 hover:bg-blue-dark pb-16 text-white font-bold py-2 px-4 rounded">{{ $ticket->is_resolved }}</span>
+                                            <span class="bg-red-600 hover:bg-red-800 pb-16 text-white font-bold py-2 px-4 rounded">{{ $ticket->is_resolved }}</span>
                                         @endif
                                     </td>
-								</div>
+								
                                     <td class="py-3 px-6 text-center">
                                         {{ $ticket->updated_at }}
                                     </td>
-									<td class="pr-10">
-										<a href="{{ url('tickets/' . $ticket->ticket_id) }}" class="btn btn-primary">Comment</a>
+									<td class="px-6 text-center">
+										<a href="{{ url('tickets/' . $ticket->ticket_id) }}" class="bg-blue-600 hover:bg-blue-800 pb-16 text-white font-bold py-2 px-4 rounded">Comment</a>
 									</td>
-									<td>
+									<td class="text-center">
+										<div class="flex gap-3">
 										<form action="{{ url('admin/close_ticket/' . $ticket->ticket_id) }}" method="POST">
 											{!! csrf_field() !!}
-											<button type="submit" class="btn btn-danger">Close</button>
+											<button type="submit" class="text-red-500 font-bold">Close</button>
 										</form>
 										
 										<form action="{{ url('admin/open_ticket/' . $ticket->ticket_id) }}" method="POST">
 											{!! csrf_field() !!}
-											<button type="submit" class="btn btn-success">Open</button>
+											<button type="submit" class="text-green-500 font-bold">Open</button>
 										</form>
+									</div>
 									</td>
                                 </tr>
                             @endforeach
